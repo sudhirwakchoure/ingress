@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mongodatabase
+  name: mongodb
+  namespace: student
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongod
+  template:
+    metadata:
+      name: mongodb-pod
+      labels:
+        app: mongod
+    spec:
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: claim
+      containers:
+      - image: mongo
+        imagePullPolicy: Always
+        name: mongo
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+          - mountPath: /data/db/
+            name: volume

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-pod-deployment
+  namespace: student
+  labels:
+    app: myapp
+spec:
+  selector:
+    matchLabels:
+      app: studentapp
+  replicas: 1
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: studentapp
+    spec:
+      containers:
+      - name:  studentapp 
+        imagePullPolicy: IfNotPresent
+        image: student11
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+       
+
+
